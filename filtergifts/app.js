@@ -2,6 +2,7 @@ let facemesh = null
 let video = null
 let canvas = null
 let ctx = null
+let boundingCtx = null
 let has_face = false
 const pixi = PIXI
 const pixiApp = new pixi.Application();
@@ -53,6 +54,9 @@ async function processFrame(frame) {
 function drawFrame() {
 	canvas = $("#boundingBox")
 	ctx = canvas[0].getContext('2d', { willReadFrequently: true })
+	boundingCanvas = $("#boundingBoxCanvas")
+	boundingCtx = boundingCanvas[0].getContext('2d', { willReadFrequently: true })
+	boundingCtx.reset()
 	ctx.drawImage(video, 0, 0);
 	const imageData = ctx.getImageData(0, 0, canvas.get(0).width, canvas.get(0).height);
 	processFrame(imageData);
@@ -69,8 +73,8 @@ function drawBoundingBox(landmarks, face) {
 	const height = face.height;
   
 	// Draw a red rectangle with a 2-pixel-wide stroke
-	ctx.strokeStyle = 'green';
-	ctx.lineWidth = 2;
-	ctx.strokeRect(x, y, width, height);
+	boundingCtx.strokeStyle = 'green';
+	boundingCtx.lineWidth = 2;
+	boundingCtx.strokeRect(x, y, width, height);
 }
 
