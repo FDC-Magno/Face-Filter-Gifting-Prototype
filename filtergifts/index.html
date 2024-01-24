@@ -1,31 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Require the peer dependencies of face-landmarks-detection. -->
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-
-    <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.3/pixi.min.js" integrity="sha512-cF/4amRPspgTiiSxNAcU3leS/1zD1mhEpbKzQJ/sJ5r/HuB8OXyYNrYOxr9DoMbKFT9toMWh4JpLYzeU0Y8tjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Filter Prototype</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.3.3/pixi.min.js"></script>
+  <script src="app.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">Face Filter Gifts Prototype</h1>
-        <div class="video-container">
-            <video class="camera" id="camera" autoplay"></video>
-            <canvas class="bounding-box-canvas" width="950px" height="500px" id="boundingBoxCanvas"><span id="faceGifts"></span></canvas>
-            <canvas class="canvas" width="1280" height="720" id="boundingBox"><span id="faceGifts"></span></canvas>
-        </div>
-    </div>
+  <video id="camera" autoplay></video>
+  <canvas id="canvas"></canvas>
 </body>
 </html>

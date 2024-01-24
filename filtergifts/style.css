@@ -1,43 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
-/* Container styling */
-.container {
-    width: 950px; /* Adjust width as needed */
-    margin: 0 auto; /* Center the container horizontally */
-}
-  
-/* Video container styling */
-.video-container {
-    position: relative; /* Enable positioning of child elements */
-    width: 100%;
-    height: 500px; /* Match the canvas height */
-}
-  
-/* Video element styling */
-.camera {
-    position: absolute; /* Position absolutely within the container */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Ensure it covers the entire container */
-    background-color: black;
-    display: none;
-}
-  
-/* Canvas element styling */
-.bounding-box-canvas {
-    position: absolute; /* Position absolutely over the video */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* Match the video dimensions for perfect overlap */
-    border: 1px solid #ccc; /* Optional border to visualize the canvas */
-}
-
 .canvas {
-    /* display: none; */
-    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
