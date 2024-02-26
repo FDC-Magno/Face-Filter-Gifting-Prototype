@@ -83,6 +83,18 @@ window.onload = () => {
 
 		image.src = photoUrl;
 		ctx.drawImage(image, 0, 0, image.width, image.height, adjustedX, adjustedY, photoWidth, photoHeight);
+
+		const contours = faceLandmarksDetection.util.getKeypointIndexByContour(faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh);
+
+		for (const [label, contour] of Object.entries(contours)) {
+		  ctx.strokeStyle = 'green';
+		  ctx.lineWidth = 3;
+		  const path = contour.map(index => keypoints[index]);
+	
+		  if (path.every(value => value != undefined)) {
+			drawPath(ctx, path, false);
+		  }
+		}
 	}
 }
 
