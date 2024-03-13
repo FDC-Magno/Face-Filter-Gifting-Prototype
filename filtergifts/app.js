@@ -1,8 +1,20 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
 window.onload = () => {
 	// Access webcam and create canvas context
 	const video = document.getElementById('camera');
 	const canvas = document.getElementById('canvas');
 	const ctx = canvas.getContext('2d', {willReadFrequently : true});
+	const loader = new GLTFLoader();
+	const scene = new THREE.Scene();
+	const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+	const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+	renderer.setClearColor(0x000000, 0);
+	renderer.setSize(500, 500);
+	document.body.appendChild(renderer.domElement);
+
 	let detector = null;
 
 	// Load face mesh detection model
@@ -30,6 +42,7 @@ window.onload = () => {
 			video.onplay = () => {
 				canvas.width = video.videoWidth;
 				canvas.height = video.videoHeight;
+				load3dMask()
 				requestAnimationFrame(renderLoop)
 			}
 		})
@@ -68,21 +81,49 @@ window.onload = () => {
 		const image = new Image();
 		
 		const { keypoints, box } = landmarkData[0]; // Access landmark and bounding box data
+
 		const noseTip = keypoints[1]; // Find nose tip
-	
+		
 		// Calculate photo dimensions and position based on bounding box
-		photoWidth = box.width*2;
-		photoHeight = box.height*2;
-		xPosition = box.xMin;
-		yPosition = box.yMin;
-		offset = 50;
+		let photoWidth = box.width * 2;
+		let photoHeight = box.height * 2;
+		let xPosition = box.xMin;
+		let yPosition = box.yMin;
+		let offset = 50;
 	
 		// Adjust position based on nose tip if needed (e.g., for masks)
-		adjustedX = noseTip.x - (photoWidth / 2);
-		adjustedY = noseTip.y - (photoHeight / 2) - offset;
+		let adjustedX = noseTip.x - (photoWidth / 2);
+		let adjustedY = noseTip.y - (photoHeight / 2) - offset;
 
 		image.src = photoUrl;
 		ctx.drawImage(image, 0, 0, image.width, image.height, adjustedX, adjustedY, photoWidth, photoHeight);
+	}
+
+	async function load3dMask() {
+		await loader.load(
+			'assets/models/winter_hat.glb', // Replace with the path to your GLTF file
+			(gltf) => {
+			  const model = gltf.scene;
+		  
+			  // **Display the loaded model:**
+			  scene.add(model);
+		  
+			  // (Optional) Additional adjustments
+			  model.scale.set(1, 1, 1); // Adjust the scale if needed
+			  model.position.set(0, 0, 0);  // Adjust the position if needed
+		  
+			  // Render the scene
+			  renderer.render(scene, camera);
+			},
+			(xhr) => {
+			  // Handle loading progress (optional)
+			  console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+			},
+			(error) => {
+			  // Handle loading errors
+			  console.error('Error loading GLTF:', error);
+			}
+		);
 	}
 }
 
